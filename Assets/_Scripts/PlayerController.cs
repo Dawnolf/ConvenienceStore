@@ -6,9 +6,11 @@ public class PlayerController : MonoBehaviour
     private float speed = 5f;
 
     public PlayerInputActions inputActions;
+    public Rigidbody2D rb;
     void Awake()
     {
         inputActions = new PlayerInputActions();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     private void OnEnable()
@@ -20,9 +22,10 @@ public class PlayerController : MonoBehaviour
     {
         inputActions.Player.Disable();
     }
-    void Update()
+    void FixedUpdate()
     {
         Vector2 direction = inputActions.Player.Move.ReadValue<Vector2>();
-        transform.Translate(direction*speed*Time.deltaTime);
+        //transform.Translate(direction*speed*Time.deltaTime);
+        rb.MovePosition(rb.position+direction*speed*Time.fixedDeltaTime);
     }
 }
